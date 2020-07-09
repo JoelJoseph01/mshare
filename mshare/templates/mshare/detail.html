@@ -1,0 +1,11 @@
+{% extends 'mshare/base.html' %}
+{% block content %}
+<br>
+<hr>
+        <div>   
+            <p><b>{{obj.author}}</b> &#8729   {{ obj.date|timesince }}</p>
+            <h2>{{ obj.title }}</h2>
+            <p>{{ obj.content|linebreaksbr }}</p>
+            <hr>
+        </div>
+{% endblock %}

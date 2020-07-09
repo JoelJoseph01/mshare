@@ -1,0 +1,25 @@
+{% extends 'mshare/base.html' %}
+
+{% block content %}
+<br>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-7 text-center">
+         <h2>Friends</h2>
+    </div>
+</div>
+<br><hr>
+{% for friend in friends %}   
+    <h4><a href="{% url 'profile_with_pk' pk=friend.pk %}" class="text-dark">{{ friend.username }}</a></h4>  
+                                <!--here view_profile_with_pk is the name given to the link
+                                    profile/view/<int:pk> in webapp.urls.py -->
+
+        <a href="{% url 'change_friends' operation='lose' pk=friend.pk %}" >                                  
+            <button type="button" class="save btn btn-danger btn-sm">Remove</button>
+        </a>
+        <br>
+
+    <br>
+{% endfor %}
+
+
+{% endblock %}

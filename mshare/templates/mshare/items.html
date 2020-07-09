@@ -1,0 +1,11 @@
+{% extends 'mshare/base.html' %}
+{% block content %}
+{% for d in item %}
+<br>
+<hr>
+ <p><b>{{d.author}}</b> &#8729   {{ d.date|timesince }}</p>
+ <h4><a href="{% url 'detail' d.id %}">{{ d.title }}</a></h4>
+ <h6>Content: <strong> {{ d.content }}</strong></h6>
+ <hr>
+{% endfor %}
+{% endblock %}

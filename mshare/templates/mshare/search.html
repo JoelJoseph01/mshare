@@ -1,0 +1,28 @@
+{% extends 'mshare/base.html' %}
+{% block content %}
+<div class="row justify-content-left mt-5">
+    <div class="col-md-7 text-left">
+         <h2 style="text-decoration: underline;">Search</h2>
+    </div>
+</div>
+<br>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+</form>
+<br>
+<hr>
+{% if check == "notfound" %}
+    <h3>No Search Results</h3>
+{% else %}
+    {% for o in obj %}
+        <div>   
+            <p><b>{{o.author}}</b> &#8729   {{o.date|timesince}}</p>
+            <h2><a href="{% url 'detail' o.id %}">{{ o.title }}</a></h2> 
+            <p>{{o.content|linebreaksbr}}</p>
+            <hr>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}
