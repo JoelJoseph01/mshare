@@ -1,9 +1,12 @@
 {% extends 'mshare/base.html' %}
 {% block content %}
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-7 text-center ">
+<div class="row justify-content-left mt-5">
+    <div class="col-md-7 text-left ">
         <h1>Profile:</h1>
-        <p>Username : {{ users.username }}</p>
+        <ul>
+           <li>Username : {{ users.username }}</li>
+           <li>Email: {{ users.email }}</li>
+        </ul>
 </div>
 {% endblock %}

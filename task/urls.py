@@ -29,6 +29,8 @@ urlpatterns = [
     path('obj/<int:pk>/', views.detail, name='detail'),
     path('items/',views.items,name='items'),
     path('search/',views.search,name='search'),
+    path('changepassword/',views.changepassword,name='changepassword'),
+    path('change_done/',views.change_done,name='change_done'),
     # """ path('data/<int:pk>', views.view, name='view'),
     # path('data/<int:pk>/delete',views.delete,name='delete')
     # """

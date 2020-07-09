@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login as dj_login,logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import authenticate, login as dj_login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from .forms import ShareForm, Searching
 from .models import Share, Friends
 from django.utils import timezone
+from .forms import SignUp
 # Create your itemss here.
 def home(request):
     return render(request,'mshare/home.html')
@@ -15,28 +16,27 @@ def signupuser(request):
     if request.user.is_authenticated:
         return redirect('profile')
     if request.method == 'GET':
-        return render(request,'mshare/signupuser.html',{'form':UserCreationForm()})
+        return render(request,'mshare/signupuser.html',{'form':SignUp()})
     if request.POST['password1'] == request.POST['password2']:
             try:
-                # form=UserCreationForm(request.POST)
-                # email=request.POST['email']
-                # if User.objects.filter(email=email):
-                #     return render(request,'mshare/signupuser.html',{'form':UserCreationForm(), 'error':'Email is already taken'})
-                    # raise ValidationError('email already in use')
-                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'],)
+                form=SignUp(request.POST)
+                email=request.POST['email']
+                if User.objects.filter(email=email):
+                    return render(request,'mshare/signupuser.html',{'form':SignUp(), 'error':'Email is already taken'})
+                user = User.objects.create_user(request.POST['username'],email=request.POST['email'], password=request.POST['password1'],)
                 user.save()
                 dj_login(request,user)
-                return redirect('add')
+                return redirect('profile')
             except IntegrityError:
-                return render(request, 'mshare/signupuser.html', {'form':UserCreationForm(), 'error':'That username has already been taken. Please choose a new username'})
+                return render(request, 'mshare/signupuser.html', {'form':SignUp(), 'error':'That username has already been taken. Please choose a new username'})
     else:
-            return render(request, 'mshare/signupuser.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})
+            return render(request, 'mshare/signupuser.html', {'form':SignUp(), 'error':'Passwords did not match'})
 def login(request):
     if request.user.is_authenticated:
         return redirect('profile')
     if request.method == 'GET':
             return render(request, 'mshare/loginuser.html', {'form':AuthenticationForm()})
-    else:
+    else:   
             user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
             if user is None:
                 return render(request, 'mshare/loginuser.html', {'form':AuthenticationForm(), 'error':'Username and password did not match'})
@@ -59,6 +59,25 @@ def profile(request, pk=None):
                 return render(request,'mshare/profile.html',{'users': users})
 
 @login_required
+def changepassword(request):
+    if request.method == 'POST':
+         form=PasswordChangeForm(request.user,request.POST)
+         if form.is_valid():
+            user=form.save()
+            update_session_auth_hash(request,user)
+            return redirect('change_done')
+         else:
+            print(form.errors)
+    else:
+        form=PasswordChangeForm(request.user)
+    return render(request, 'mshare/changepassword.html',{'form':form})
+
+@login_required
+def change_done(request):
+    return render(request,'mshare/change_done.html')
+
+
+@login_required
 def add(request):
     if request.method == 'GET':
         return render(request,'mshare/add.html',{'form':ShareForm()})
@@ -76,7 +95,6 @@ def add(request):
 @login_required
 def detail(request,pk):
     obj=get_object_or_404(Share,pk=pk)
-    item=Share.objects.get(pk=pk)
     return render(request,'mshare/detail.html',{'obj':obj})
 
 # @login_required
