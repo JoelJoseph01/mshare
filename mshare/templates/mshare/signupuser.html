@@ -1,5 +1,5 @@
 {% extends 'mshare/base.html' %}
-{% block content %}   <br>
+{% block content %}
 <br>
 <div class="row justify-content-center mt-5">
     <div class="col-md-5">
@@ -8,12 +8,12 @@
                 {{ error }}
             </div>
         {% endif %}
-<div class="login-form" style="margin-bottom: 15px;
+<div class="login-form" style="margin-bottom: 15px;margin-top: -10px;
 background:white;
 box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-padding: 30px;">
+padding: 50px;">
 <form method="POST">
-    <h2 class="text-center">Sign In</h2>
+    <h2 class="text-center" style="padding-bottom: 25px; margin-top: -30px;">Sign In</h2>
   {% csrf_token %}
   <div class="md-form">
     <i class="fas fa-user prefix white-text active"></i>
@@ -39,11 +39,9 @@ padding: 30px;">
 </form>
 <hr>
 <div class="text-center">
-    Do you already have an account? <a href="{% url 'loginuser' %}"><strong>Login Here</strong></a>
+    Do you already have an account? <a href="{% url 'loginuser' %}">Login here</a>
 </div>
 </div>
-</div>
-</div>
-</div>
+
 
 {% endblock %}
