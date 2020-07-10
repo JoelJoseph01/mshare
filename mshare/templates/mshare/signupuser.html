@@ -1,10 +1,6 @@
 {% extends 'mshare/base.html' %}
-{% block content %}
-<div class="row justify-content-center mt-5">
-    <div class="col-md-5">
-        <h2>Sign Up</h2>
-    </div>
-</div>
+{% block content %}   <br>
+<br>
 <div class="row justify-content-center mt-5">
     <div class="col-md-5">
         {% if error %}
@@ -12,14 +8,40 @@
                 {{ error }}
             </div>
         {% endif %}
+<div class="login-form" style="margin-bottom: 15px;
+background:white;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+padding: 30px;">
 <form method="POST">
+    <h2 class="text-center">Sign In</h2>
   {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary" href="{% url 'loginuser' %}">SignUp</button>
+  <div class="md-form">
+    <i class="fas fa-user prefix white-text active"></i>
+    <input type="email" id="email" class="white-text form-control" name="email" placeholder="Email">
+  </div>
+  <br>
+  <div class="md-form">
+    <i class="fas fa-envelope prefix white-text active"></i>
+    <input type="text" id="username" class="white-text form-control"name="username" placeholder="Username">  
+</div>
+<br>
+  <div class="md-form">
+    <i class="fas fa-lock prefix white-text active"></i>
+    <input type="password" id="password1" class="white-text form-control" name="password1" placeholder="Password">
+  </div>
+  <br>
+  <div class="md-form">
+    <i class="fas fa-lock prefix white-text active"></i>
+    <input type="password" id="password2" class="white-text form-control" name="password2" placeholder="Confirm Password">
+  </div>
+  <br>
+    <button type="submit" class="btn btn-primary" href="{% url 'loginuser' %}">Register</button>
 </form>
 <hr>
 <div class="text-center">
-    Do you already have an account? <a href="{% url 'loginuser' %}">Login here</a>
+    Do you already have an account? <a href="{% url 'loginuser' %}"><strong>Login Here</strong></a>
+</div>
+</div>
 </div>
 </div>
 </div>

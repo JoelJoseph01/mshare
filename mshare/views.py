@@ -23,7 +23,7 @@ def signupuser(request):
                 email=request.POST['email']
                 if User.objects.filter(email=email):
                     return render(request,'mshare/signupuser.html',{'form':SignUp(), 'error':'Email is already taken'})
-                user = User.objects.create_user(request.POST['username'],email=request.POST['email'], password=request.POST['password1'],)
+                user = User.objects.create_user(request.POST['username'],email=request.POST['email'],password=request.POST['password1'])
                 user.save()
                 dj_login(request,user)
                 return redirect('profile')
