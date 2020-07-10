@@ -2,11 +2,6 @@
 {% block content %}   <br>
 <div class="row justify-content-center mt-5">
     <div class="col-md-5">
-        <h2>Add ur content</h2>
-    </div>
-</div>
-<div class="row justify-content-center mt-5">
-    <div class="col-md-5">
         {% if error %}
             <div class="alert alert-danger" role="alert">
                 {{ error }}
@@ -19,37 +14,26 @@
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	padding: 30px;">
         {% csrf_token %}
-        <div class="row">
+        <div class="row" style="padding-bottom: 10px; color: black;">
         	<div class="col-8 offset-4">
-				<h2>Sign Up</h2>
+				<h2>Add</h2>
 			</div>	
-      	</div>			
+          </div>		
+        <div style="color: black;">	
         <div class="form-group row">
-			<label class="col-form-label col-4">Username</label>
+			<label class="col-form-label col-4">Title</label>
 			<div class="col-8">
-                <input type="text" class="form-control" name="username" required="required">
+                <input type="text" class="form-control" name="title" required="required">
             </div>        	
         </div>
 		<div class="form-group row">
-			<label class="col-form-label col-4">Email Address</label>
+			<label class="col-form-label col-4">Content</label>
 			<div class="col-8">
-                <input type="email" class="form-control" name="email" required="required">
+                <textarea rows="8" cols="150" name="content" class="form-control"></textarea>
             </div>        	
-        </div>
-		<div class="form-group row">
-			<label class="col-form-label col-4">Password</label>
-			<div class="col-8">
-                <input type="password" class="form-control" name="password" required="required">
-            </div>        	
-        </div>
-		<div class="form-group row">
-			<label class="col-form-label col-4">Confirm Password</label>
-			<div class="col-8">
-                <input type="password" class="form-control" name="confirm_password" required="required">
-            </div>        	
-        </div>
+        </div>     	
         <button type="submit" class="btn btn-primary">Add</button>
-
+    </div>
     </form>
     </div>
     </div>
