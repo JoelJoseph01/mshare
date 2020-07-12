@@ -1,5 +1,12 @@
 {% extends 'mshare/base.html' %}
 {% block content %}   <br>
+<div style="width: 100%;
+padding: auto;
+border: 5px solid white;
+background:white;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+margin: 0px; padding-left: 20px;" 
+>
 <div class="row justify-content-left mt-5">
     <div class="col-md-7 text-left">
          <h2 style="text-decoration: underline;">Search</h2>
@@ -12,17 +19,25 @@
         <button type="submit" class="btn btn-primary btn-sm">Search</button>
 </form>
 <br>
-<hr>
+</div>
+<br>
 {% if check == "notfound" %}
     <h3>No Search Results</h3>
 {% else %}
     {% for o in obj %}
+    <div style="width: 100%;
+    padding: auto;
+    border: 5px solid white;
+    background:white;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    margin: 0px; padding-left: 20px;" 
+    >
         <div>   
             <p><b>{{o.author}}</b> &#8729   {{o.date|timesince}}</p>
             <h2><a href="{% url 'detail' o.id %}">{{ o.title }}</a></h2> 
             <p>{{o.content|linebreaksbr}}</p>
-            <hr>
         </div>
     {% endfor %}
+    </div>
 {% endif %}
 {% endblock %}

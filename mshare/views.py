@@ -4,11 +4,12 @@ from django.contrib.auth import authenticate, login as dj_login, logout, update_
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from .forms import ShareForm, Searching
-from .models import Share, Friends
+from .forms import ShareForm, Searching, LikeForm
+from .models import Share, Friends, Like
 from django.utils import timezone
 from .forms import SignUp
-# Create your itemss here.
+from django.http import HttpResponseRedirect
+
 def home(request):
     return render(request,'mshare/home.html')
 
@@ -95,15 +96,53 @@ def add(request):
 @login_required
 def detail(request,pk):
     obj=get_object_or_404(Share,pk=pk)
-    return render(request,'mshare/detail.html',{'obj':obj})
+    share=Share.objects.get(pk=pk)
+    try: 
+        liked = Like.objects.get(current_item=share)
+        users = liked.users.all()
+    except Like.DoesNotExist:
+        users=None
+    if users == None:
+        check = 'False'
+    elif request.user in users:
+        check = 'True'
+    else:
+        check = 'False'    
+    return render(request,'mshare/detail.html',{'obj':obj,'check':check})
 
-# @login_required
-# def delete(request,pk):
-#     data = get_object_or_404(Share, pk=pk, author=request.user)
-#     if request.method == 'GET':
-#         data.delete()
-#         return render(request,'mshare/view.html',{'data':data})
+def likes(request,share_pk):
+    share=Share.objects.get(pk=share_pk)
+    try: 
+        liked = Like.objects.get(current_item=share)
+        users = liked.users.all()
+    except Like.DoesNotExist:
+        users=None
 
+    if users == None:
+        Like.like(share,request.user)
+    elif request.user in users:
+        Like.unlike(share,request.user)
+    else:
+        Like.like(share,request.user)
+    share=Share.objects.get(pk=share_pk)
+    try: 
+        liked = Like.objects.get(current_item=share)
+        users = liked.users.all()
+    except Like.DoesNotExist:
+        users=None
+    y=len(users)
+    share.likes=y
+    share.save()
+     
+    return redirect('detail', pk = share_pk)
+
+
+@login_required
+def delete(request,obj_id=None):
+    obj=Share.objects.get(id=obj_id)
+    obj.delete()
+    return redirect('items')
+    
 @login_required  
 def items(request):
     item=Share.objects.order_by('-date').filter(author=request.user)

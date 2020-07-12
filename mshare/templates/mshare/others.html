@@ -2,6 +2,13 @@
 
 {% block content %}   <br>
 <br>
+<div style="width: 100%;
+padding: auto;
+border: 5px solid white;
+background:white;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+margin: 0px; padding-left: 20px;" 
+>
 <div class="row justify-content-center mt-5">
     <div class="col-md-7 text-center">
          <h2>All Users</h2>
@@ -14,14 +21,13 @@
                                     profile/view/<int:pk> in webapp.urls.py -->
 
     {% if user not in friends %}
-        <a href="{% url 'change_friends' operation='make' pk=user.pk %}" >                                  
-            <button type="button" class="save btn btn-success btn-sm">AddFriend</button>
-        </a>
+        <a href="{% url 'change_friends' operation='make' pk=user.pk %}" class="btn btn-success btn-sm">Add Friend</a>                                
         <br>
     {% endif %}
 
     <br>
+    
 {% endfor %}
-
+</div>
 
 {% endblock %}

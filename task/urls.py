@@ -31,13 +31,13 @@ urlpatterns = [
     path('search/',views.search,name='search'),
     path('changepassword/',views.changepassword,name='changepassword'),
     path('change_done/',views.change_done,name='change_done'),
+    path('delete/<obj_id>',views.delete,name='delete'),
     # """ path('data/<int:pk>', views.view, name='view'),
-    # path('data/<int:pk>/delete',views.delete,name='delete')
     # """
     url(r'^profile/view/(?P<pk>\d+)/$',views.profile, name='profile_with_pk'), 
     url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$',views.change_friends,name='change_friends'),
     url(r'^profile/others/$',views.others, name='others'),                                     
     url(r'^profile/friends/$',views.friends, name='friends'),
-
+    url(r'^profile/ob/(?P<share_pk>\d+)/$',views.likes,name='likes'), 
 ]
 

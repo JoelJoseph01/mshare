@@ -23,3 +23,8 @@ class Searching(ModelForm):
     class Meta:
         model = Share
         fields = ['title']
+
+class LikeForm(forms.ModelForm):
+    class Meta:
+        model = Like
+        fields = ()

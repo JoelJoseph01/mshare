@@ -8,6 +8,7 @@ class Share(models.Model):
     title=models.CharField(max_length=50)
     content=models.TextField()
     date=models.DateTimeField(default=timezone.now)
+    likes=models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -32,3 +33,24 @@ class Friends(models.Model):
             current_user=current_user
         )
         friend.users.remove(new_friend)
+
+class Like(models.Model):
+    users = models.ManyToManyField(User,null=True,blank=True)
+    current_item=models.ForeignKey(Share, related_name='currentitem',on_delete=models.CASCADE,null=True)
+
+    @classmethod
+    def like(cls,current_item,current_user):
+        ob, created = cls.objects.get_or_create(
+            current_item=current_item
+        )
+        ob.users.add(current_user)
+        
+    
+    @classmethod
+    def unlike(cls,current_item,current_user):
+        ob, created = cls.objects.get_or_create(
+            current_item=current_item
+        )
+        ob.users.remove(current_user)
+
+

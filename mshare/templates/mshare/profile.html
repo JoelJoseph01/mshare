@@ -2,12 +2,34 @@
 {% block content %}  
 <br>
 
-<div class="row justify-content-left mt-5">
+<div style="width: 100%;
+padding: auto;
+border: 5px solid white;
+background:white;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+margin: 0px; padding-left: 20px;" 
+>
+<div class="row justify-content-left mt-4" style="margin: auto; ">
     <div class="col-md-7 text-left ">
-        <h1>Profile:</h1>
+        <h1 style="padding-top: -4px;">Profile:</h1>
         <ul>
            <li>Username : {{ users.username }}</li>
            <li>Email: {{ users.email }}</li>
         </ul>
+        
 </div>
+</div>
+</div>
+<br>
+<div>
+    <a type="button" href="{% url 'items' %}" class="btn btn-secondary">
+         <span>View</span>
+    </a>
+    <a></a>
+    <a type="button" href="{% url 'add' %}" class="btn btn-secondary">
+        <span>Add</span>
+    </a>
+    
+</div>
+
 {% endblock %}
